@@ -1,0 +1,24 @@
+postgresql:
+  postgresqlDatabase: "postgres"
+  postgresqlUsername: "postgres"
+  postgresqlPassword: "mysecretpassword"
+
+service:
+  type: ClusterIP
+
+primary:
+    initdb:
+        scripts:
+          my_init_script.sql: |
+            CREATE USER keycloak;
+            CREATE DATABASE keycloak;
+            GRANT ALL PRIVILEGES ON DATABASE keycloak TO keycloak;
+            ALTER USER keycloak WITH PASSWORD 'mysecretpassword';
+            ALTER DATABASE keycloak OWNER TO keycloak;
+          my_init2_script.sql: |
+            CREATE USER airapi;
+            CREATE DATABASE airapi;
+            GRANT ALL PRIVILEGES ON DATABASE airapi TO airapi;
+            ALTER USER airapi WITH PASSWORD 'mysecretpassword';
+            ALTER DATABASE airapi OWNER TO airapi;
+
